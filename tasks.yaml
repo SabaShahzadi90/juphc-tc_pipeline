@@ -1,11 +1,15 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: npm-install
+  name: npm
+  labels:
+    app: tax-calculator
 spec:
+  description: Install npm dependencies for tax-calculator
   steps:
     - name: npm-install
       image: node:18
+      workingDir: /workspace/source
       script: |
         #!/usr/bin/env bash
         npm install
@@ -13,11 +17,15 @@ spec:
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: run-jasmine-tests
+  name: jasmine
+  labels:
+    app: tax-calculator
 spec:
+  description: Run Jasmine tests for tax-calculator
   steps:
-    - name: run-tests
+    - name: run-jasmine
       image: node:18
+      workingDir: /workspace/source
       script: |
         #!/usr/bin/env bash
         npm test
